@@ -36,7 +36,6 @@ public class Auth extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Log.w("Auth.java ", "onTabSelected: " + tab.getPosition());
                 viewPager.setCurrentItem(tab.getPosition());
             }
 
@@ -66,11 +65,9 @@ public class Auth extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    Log.w("Auth.java ", "onTabSelected: " + 2);
                 default:
                     return new LoginFragment();
                 case 1:
-                    Log.w("Auth.java ", "onTabSelected: " + 2);
                     return new SignupFragment();
             }
         }
