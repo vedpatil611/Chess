@@ -1,23 +1,21 @@
 package com.mad_project.chess.pages;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.mad_project.chess.R;
 
-public class Auth extends AppCompatActivity {
+public class Auth extends FragmentActivity {
 
     TabLayout tabLayout;
-    ViewPager viewPager;
+    ViewPager2 viewPager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,10 +28,9 @@ public class Auth extends AppCompatActivity {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager = findViewById(R.id.auth_view_pager);
-        viewPager.setAdapter(new AuthTabAdapter(getSupportFragmentManager(), tabLayout.getTabCount()));
-        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setAdapter(new AuthTabAdapter(Auth.this, tabLayout.getTabCount()));
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -51,18 +48,18 @@ public class Auth extends AppCompatActivity {
         });
     }
 
-    public static class AuthTabAdapter extends FragmentStatePagerAdapter {
+    public static class AuthTabAdapter extends FragmentStateAdapter {
 
         int count;
 
-        public AuthTabAdapter(@NonNull FragmentManager fm, int count) {
-            super(fm);
+        public AuthTabAdapter(@NonNull FragmentActivity fragmentActivity, int count) {
+            super(fragmentActivity);
             this.count = count;
         }
 
         @NonNull
         @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
                 default:
@@ -73,7 +70,7 @@ public class Auth extends AppCompatActivity {
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return count;
         }
     }
