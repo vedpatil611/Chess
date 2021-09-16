@@ -78,10 +78,15 @@ public class Auth extends FragmentActivity implements LoginFragment.LoginInterfa
 
     @Override
     public void signup(String email, String password, String cpassword) {
+        if(!password.equals(cpassword))
+            Toast.makeText(this, "Password does not match", Toast.LENGTH_LONG).show();
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if(task.isSuccessful()) {
+                        mAuth.signOut();
                         viewPager.setCurrentItem(0);
+                        Toast.makeText(Auth.this, "Signed in successfully", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(Auth.this, "Failed to sign up", Toast.LENGTH_LONG).show();
                     }
