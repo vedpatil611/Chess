@@ -1,6 +1,7 @@
 package com.mad_project.chess.pages;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mad_project.chess.R;
 
-public class Auth extends FragmentActivity {
+public class Auth extends FragmentActivity implements LoginFragment.LoginInterface, SignupFragment.SignupInterface {
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
@@ -60,6 +61,30 @@ public class Auth extends FragmentActivity {
         if(currentUser != null) {
             // go to next page
         }
+    }
+
+    @Override
+    public void login(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if(task.isSuccessful()) {
+                        // go to next page
+                    } else {
+                        Toast.makeText(Auth.this, "Incorrect email id or password", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    @Override
+    public void signup(String email, String password, String cpassword) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if(task.isSuccessful()) {
+                        viewPager.setCurrentItem(0);
+                    } else {
+                        Toast.makeText(Auth.this, "Failed to sign up", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     public static class AuthTabAdapter extends FragmentStateAdapter {
