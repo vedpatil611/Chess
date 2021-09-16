@@ -10,17 +10,22 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mad_project.chess.R;
 
 public class Auth extends FragmentActivity {
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        mAuth = FirebaseAuth.getInstance();
 
         tabLayout = findViewById(R.id.auth_tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Login"));
@@ -46,6 +51,15 @@ public class Auth extends FragmentActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            // go to next page
+        }
     }
 
     public static class AuthTabAdapter extends FragmentStateAdapter {
