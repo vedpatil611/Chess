@@ -11,7 +11,6 @@ public class ChessBoard extends View {
 
     Paint paint;
     int lightColor, darkColor;
-    float scaleFactor = 1.0f;
     int originX = 20;
     int originY = 500;
     int cellSize = 200;
