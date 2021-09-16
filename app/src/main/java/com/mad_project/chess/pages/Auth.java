@@ -1,5 +1,6 @@
 package com.mad_project.chess.pages;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -59,7 +60,7 @@ public class Auth extends FragmentActivity implements LoginFragment.LoginInterfa
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
-            // go to next page
+            startActivity(new Intent(Auth.this, ChessGame.class));
         }
     }
 
@@ -68,7 +69,7 @@ public class Auth extends FragmentActivity implements LoginFragment.LoginInterfa
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if(task.isSuccessful()) {
-                        // go to next page
+                        startActivity(new Intent(Auth.this, ChessGame.class));
                     } else {
                         Toast.makeText(Auth.this, "Incorrect email id or password", Toast.LENGTH_LONG).show();
                     }
