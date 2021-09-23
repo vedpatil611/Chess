@@ -6,4 +6,16 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="title_activity_main2">MainActivity2</string>
+    <string name="kings_sacrifice">Kings Sacrifice</string>
+    <string name="_1_0">1 + 0</string>
+    <string name="blitz">Blitz</string>
+    <string name="_15_0">15 + 0</string>
+    <string name="rapid">Rapid</string>
+    <string name="plus_icon">Plus icon</string>
+    <string name="home">Home</string>
+    <string name="analysis">Analysis</string>
+    <string name="profile">Profile</string>
+    <string name="play">Play</string>
+    <string name="new_game">New Game</string>
+    <string name="otb">Over The Board</string>
 </resources>
