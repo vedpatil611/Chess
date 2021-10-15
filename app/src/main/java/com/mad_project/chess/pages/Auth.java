@@ -60,7 +60,7 @@ public class Auth extends FragmentActivity implements LoginFragment.LoginInterfa
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null) {
-            startActivity(new Intent(Auth.this, ChessGame.class));
+            startActivity(new Intent(Auth.this, HomeScreen.class));
             finish();
         }
     }
@@ -70,7 +70,7 @@ public class Auth extends FragmentActivity implements LoginFragment.LoginInterfa
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if(task.isSuccessful()) {
-                        startActivity(new Intent(Auth.this, ChessGame.class));
+                        startActivity(new Intent(Auth.this, HomeScreen.class));
                         Auth.this.finish();
                     } else {
                         Toast.makeText(Auth.this, "Incorrect email id or password", Toast.LENGTH_LONG).show();

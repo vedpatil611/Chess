@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         // Example of a call to a native method
         TextView tv = binding.sampleText;
 //        tv.setText(stringFromJNI());
