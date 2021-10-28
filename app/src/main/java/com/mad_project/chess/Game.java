@@ -8,7 +8,7 @@ import java.util.Set;
 public class Game {
     private Set<ChessPiece> pieceBox = new HashSet<>();
     private Player playerTurn = Player.WHITE;
-    private Player playerColor = Player.WHITE;
+    private final Player playerColor;
 
     public Game(Player playerColor) {
         this.playerColor = playerColor;
@@ -106,12 +106,16 @@ public class Game {
     }
 
     private boolean canMove(Position from, Position to) {
+//        if (playerTurn != playerColor) return false;
+
         if (from.col == to.col && from.row == to.row) {
             return  false;
         }
+
         ChessPiece movingPiece = pieceAt(from);
-        if(movingPiece.player != playerColor) return false;
         if(movingPiece != null) {
+            if (movingPiece.player != playerColor) return false;
+
             switch (movingPiece.pieceType) {
                 case KING:
                     return canKingMove(from, to);
@@ -181,7 +185,16 @@ public class Game {
                 newPiece.col = to.col;
                 newPiece.row = to.row;
                 addPiece(newPiece);
+
+                flipTurn();
             }
         }
+    }
+
+    public void flipTurn() {
+        if(playerTurn == Player.WHITE)
+            playerTurn = Player.BLACK;
+        else
+            playerTurn = Player.WHITE;
     }
 }

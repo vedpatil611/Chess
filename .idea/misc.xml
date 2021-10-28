@@ -3,12 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/drawable/corner_button_drawable.xml" value="0.3769230769230769" />
         <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/layout/activity_auth.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/layout/board_view.xml" value="0.36096014492753625" />
+        <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/layout/dialog_join_game.xml" value="0.33" />
         <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/layout/fragment_login.xml" value="0.24114583333333334" />
         <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/layout/fragment_signup.xml" value="0.24114583333333334" />
         <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/layout/home_screen.xml" value="0.20520833333333333" />
+        <entry key="..\:/AndroidStudioProjects/Chess/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/activity_auth.xml" value="0.36594202898550726" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.36594202898550726" />
         <entry key="app/src/main/res/layout/board_view.xml" value="0.24722222222222223" />

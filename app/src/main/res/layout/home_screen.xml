@@ -1,22 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    app:ignore="NamespaceTypo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#737373"
+    app:context=".pages.HomeScreen">
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="@string/kings_sacrifice"
+        android:titleTextColor="@color/white"
+        android:background="#171717" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingHorizontal="40dp"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Game"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:background="@drawable/corner_button_drawable"
+            android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/w_king"
+            android:onClick="createGame"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Join Game"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:background="@drawable/corner_button_drawable"
+            android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/b_king"
+            android:onClick="joinGame"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Over The Board"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:background="@drawable/corner_button_drawable"
+            android:drawableLeft="@drawable/w_knight"/>
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:background="#171717"
+        app:menu="@menu/bottom_navigation_menu"
+        android:foregroundTint="@color/white"
+        app1:itemIconTint="@color/white"
+        app1:itemTextColor="@color/white"/>
+
+</LinearLayout>
+<!--
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:padding="30dp"
     tools:context=".pages.HomeScreen">
 
     <Button
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create game"
+        android:drawableLeft="@drawable/w_pawn"
         android:onClick="createGame"/>
 
     <Button
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Join game"
+        android:drawableLeft="@drawable/b_pawn"
         android:onClick="joinGame"/>
 
-</LinearLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>-->
