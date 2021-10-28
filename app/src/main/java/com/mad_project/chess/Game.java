@@ -114,7 +114,7 @@ public class Game {
 
         ChessPiece movingPiece = pieceAt(from);
         if(movingPiece != null) {
-            if (movingPiece.player != playerColor) return false;
+//            if (movingPiece.player != playerColor) return false;
 
             switch (movingPiece.pieceType) {
                 case KING:
@@ -177,6 +177,30 @@ public class Game {
                     if(pieceAt.player == movingPiece.player) {
                         return;
                     }
+                    pieceBox.remove(pieceAt);
+                }
+
+                pieceBox.remove(movingPiece);
+                ChessPiece newPiece = new ChessPiece(movingPiece);
+                newPiece.col = to.col;
+                newPiece.row = to.row;
+                addPiece(newPiece);
+
+                flipTurn();
+            }
+        }
+    }
+
+    public void recievedMovePiece(Position from, Position to) {
+        if (canMove(from, to)) {
+            if (from.col == to.col && from.row == to.row) return;
+            ChessPiece movingPiece = pieceAt(new Position(from.col, from.row));
+            if(movingPiece != null) {
+                ChessPiece pieceAt = pieceAt(new Position(to.col, to.row));
+                if(pieceAt != null) {
+//                    if(pieceAt.player != movingPiece.player) {
+//                        return;
+//                    }
                     pieceBox.remove(pieceAt);
                 }
 

@@ -141,11 +141,12 @@ public class ChessGame extends Activity implements ChessInterface {
                     move[i] = Integer.parseInt(movesStr[i]);
                 }
 
-                runOnUiThread(() -> {
-                    game.movePiece(new Position(move[0], move[1]), new Position(move[2], move[3]));
+//                runOnUiThread(() -> {
+//                    game.movePiece(new Position(move[0], move[1]), new Position(move[2], move[3]));
+                    game.recievedMovePiece(new Position(move[0], move[1]), new Position(move[2], move[3]));
                     board.invalidate();
                     game.flipTurn();
-                });
+//                });
             }
         }
     }
