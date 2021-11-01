@@ -18,7 +18,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
         <activity android:name=".pages.HomeScreen" />
         <activity android:name=".pages.ChessGame" />
     </application>
