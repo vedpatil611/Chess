@@ -96,12 +96,25 @@ public class Game {
 
     private boolean canPawnMove(Position from, Position to) {
         if (from.col == to.col) {
-            if (from.row == 1) {
+            if (from.row == 1 && pieceAt(from).player == Player.WHITE) {
                 return to.row == 2 || to.row == 3;
-            } else if (from.row == 6) {
+            } else if (from.row == 6 && pieceAt(from).player == Player.BLACK) {
                 return to.row == 5 || to.row == 4;
-            }
+            } else if(from.row + 1 == to.row && pieceAt(to) == null && pieceAt(from).player == Player.WHITE) {
+                return true;
+            } else return from.row - 1 == to.row && pieceAt(to) == null && pieceAt(from).player == Player.BLACK;
+        } else if((from.col + 1 == to.col && from.row + 1 == to.row) || (from.col - 1 == to.col && from.row + 1 == to.row)) {
+            ChessPiece atTo = pieceAt(to);
+            return (atTo != null && atTo.player == Player.BLACK);
+        } else if((from.col + 1 == to.col && from.row - 1 == to.row) || (from.col - 1 == to.col && from.row - 1 == to.row)) {
+            ChessPiece atTo = pieceAt(to);
+            return (atTo != null && atTo.player == Player.WHITE);
         }
+        return false;
+    }
+
+    private boolean isCheck(Player playerColor) {
+
         return false;
     }
 
