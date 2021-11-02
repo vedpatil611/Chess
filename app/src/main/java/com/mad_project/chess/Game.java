@@ -203,8 +203,53 @@ public class Game {
         return false;
     }
 
+    private boolean knightCheck(Position kingPos) {
+        ChessPiece kingPiece = pieceAt(kingPos);
+        if(kingPos.row + 1 < 8 && kingPos.col + 2 < 8) {
+            ChessPiece at = pieceAt(new Position(kingPos.col+2, kingPos.row+1));
+            if(at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        if(kingPos.row - 1 >= 0 && kingPos.col + 2 < 8) {
+            ChessPiece at = pieceAt(new Position(kingPos.col + 2, kingPos.row - 1));
+            if (at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        if(kingPos.row + 2 < 8 && kingPos.col + 1 < 8) {
+            ChessPiece at = pieceAt(new Position(kingPos.col+1, kingPos.row+2));
+            if(at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        if(kingPos.row + 2 < 8 && kingPos.col - 1 >= 0) {
+            ChessPiece at = pieceAt(new Position(kingPos.col-1, kingPos.row+2));
+            if(at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        if(kingPos.row - 1 >= 0 && kingPos.col - 2 >= 0) {
+            ChessPiece at = pieceAt(new Position(kingPos.col-2, kingPos.row-1));
+            if(at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        if(kingPos.row + 1 < 8 && kingPos.col - 2 >= 0) {
+            ChessPiece at = pieceAt(new Position(kingPos.col-2, kingPos.row+1));
+            if(at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        if(kingPos.row - 2 >= 0 && kingPos.col - 1 >= 0) {
+            ChessPiece at = pieceAt(new Position(kingPos.col-1, kingPos.row-2));
+            if(at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        if(kingPos.row - 2 >= 0 && kingPos.col + 1 < 8) {
+            ChessPiece at = pieceAt(new Position(kingPos.col+1, kingPos.row-2));
+            if(at != null && at.player != kingPiece.player && at.pieceType == PieceType.KNIGHT)
+                return true;
+        }
+        return false;
+    }
+
     private boolean isCheck(Position kingPos) {
-        boolean isCheck = isHorizontalCheck(kingPos) || isVerticalCheck(kingPos) || isDiagonallyCheck(kingPos);
+        boolean isCheck = isHorizontalCheck(kingPos) || isVerticalCheck(kingPos) || isDiagonallyCheck(kingPos) || knightCheck(kingPos);
         if(isCheck) {
             Toast.makeText(context, "King checked", Toast.LENGTH_SHORT).show();
             return true;
