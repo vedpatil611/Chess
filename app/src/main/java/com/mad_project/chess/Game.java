@@ -1,6 +1,7 @@
 package com.mad_project.chess;
 
 import android.content.Context;
+import android.icu.util.LocaleData;
 import android.widget.Toast;
 
 import java.lang.Math;
@@ -159,24 +160,51 @@ public class Game {
     }
 
     private boolean isDiagonallyCheck(Position kingPos) {
-//        for(int i = 0; i < 8; ++i) {
-//            if(PieceType)
-//        }
-//        if (Math.abs(from.col - to.col) != Math.abs(from.row - to.row)) return false;
-//        int gap = Math.abs(from.col - to.col) - 1;
-//
-//        for (int i = 1; i <= gap; ++i) {
-//            int nextCol = (to.col > from.col) ? from.col + i : from.col - i;
-//            int nextRow = (to.row > from.row) ? from.row + i : from.row - i;
-//            if (pieceAt(new Position(nextCol, nextRow)) != null) {
-//                return false;
-//            }
-//        }
+        ChessPiece kingPiece = pieceAt(kingPos);
+        for(int i = 1; true; ++i) {
+            if(kingPos.row + i >=8 || kingPos.col + i >= 8)
+                break;
+            ChessPiece at = pieceAt(new Position(kingPos.col + i, kingPos.row + i));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.BISHOP || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
+
+        for(int i = 1; true; ++i) {
+            if(kingPos.row + i >= 8 || kingPos.col - i < 8)
+                break;
+            ChessPiece at = pieceAt(new Position(kingPos.col - i, kingPos.row + i));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.BISHOP || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
+
+        for(int i = 1; true; ++i) {
+            if(kingPos.row - i < 0 || kingPos.col - i < 0)
+                break;
+            ChessPiece at = pieceAt(new Position(kingPos.col - i, kingPos.row - i));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.BISHOP || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
+
+        for(int i = 1; true; ++i) {
+            if(kingPos.row - i < 0 || kingPos.col + i >= 8)
+                break;
+            ChessPiece at = pieceAt(new Position(kingPos.col + i, kingPos.row - i));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.BISHOP || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
         return false;
     }
 
     private boolean isCheck(Position kingPos) {
-        boolean isCheck = isHorizontalCheck(kingPos) || isVerticalCheck(kingPos);
+        boolean isCheck = isHorizontalCheck(kingPos) || isVerticalCheck(kingPos) || isDiagonallyCheck(kingPos);
         if(isCheck) {
             Toast.makeText(context, "King checked", Toast.LENGTH_SHORT).show();
             return true;
