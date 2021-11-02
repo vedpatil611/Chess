@@ -129,6 +129,11 @@ public class ChessGame extends Activity implements ChessInterface {
 //        }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     void receiveMove(Socket socket) throws IOException {
         Scanner sc = new Scanner(socket.getInputStream());
         printWriter = new PrintWriter(socket.getOutputStream(), true);

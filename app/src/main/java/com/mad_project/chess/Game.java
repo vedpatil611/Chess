@@ -2,7 +2,10 @@ package com.mad_project.chess;
 
 import android.content.Context;
 import android.icu.util.LocaleData;
+import android.os.Handler;
 import android.widget.Toast;
+
+import com.mad_project.chess.pages.ChessGame;
 
 import java.lang.Math;
 
@@ -249,12 +252,90 @@ public class Game {
     }
 
     private boolean isCheck(Position kingPos) {
-        boolean isCheck = isHorizontalCheck(kingPos) || isVerticalCheck(kingPos) || isDiagonallyCheck(kingPos) || knightCheck(kingPos);
-        if(isCheck) {
-            Toast.makeText(context, "King checked", Toast.LENGTH_SHORT).show();
-            return true;
+        return isHorizontalCheck(kingPos) || isVerticalCheck(kingPos) || isDiagonallyCheck(kingPos) || knightCheck(kingPos);
+    }
+
+    private boolean isCheckmate(Position kingPos) {
+        ChessPiece kingPiece = pieceAt(kingPos);
+        short checkFlag = 0;
+        if(isCheck(kingPos))
+            checkFlag |= 1;
+
+        ChessPiece at = pieceAt(new Position(kingPos.col, kingPos.row + 1));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 2;
+        } else if(at != null) {
+            kingPiece.row += 1;
+            if (isCheck(kingPos))
+                checkFlag |= 2;
         }
-        return false;
+
+        at = pieceAt(new Position(kingPos.col, kingPos.row - 1));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 4;
+        } else if(at != null) {
+            kingPiece.row -= 2;
+            if(isCheck(kingPos))
+                checkFlag |= 4;
+        }
+
+        at = pieceAt(new Position(kingPos.col + 1, kingPos.row));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 8;
+        } else if(at != null) {
+            kingPiece.row += 1;
+            kingPiece.col += 1;
+            if(isCheck(kingPos))
+                checkFlag |= 8;
+        }
+
+        at = pieceAt(new Position(kingPos.col - 1, kingPos.row));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 16;
+        } else if(at != null) {
+            kingPiece.col -= 2;
+            if(isCheck(kingPos))
+                checkFlag |= 16;
+        }
+
+        at = pieceAt(new Position(kingPos.col + 1, kingPos.row + 1));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 32;
+        } else if(at != null) {
+            kingPiece.col += 2;
+            kingPiece.row += 1;
+            if(isCheck(kingPos))
+                checkFlag |= 32;
+        }
+
+        at = pieceAt(new Position(kingPos.col + 1, kingPos.row - 1));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 64;
+        } else if(at != null) {
+            kingPiece.row -= 2;
+            if(isCheck(kingPos))
+                checkFlag |= 64;
+        }
+
+        at = pieceAt(new Position(kingPos.col - 1, kingPos.row - 1));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 128;
+        } else if(at != null) {
+            kingPiece.col -= 2;
+            if(isCheck(kingPos))
+                checkFlag |= 128;
+        }
+
+        at = pieceAt(new Position(kingPos.col - 1, kingPos.row + 1));
+        if(at != null && at.player == kingPiece.player) {
+            checkFlag |= 256;
+        } else if(at != null) {
+            kingPiece.row += 2;
+            if(isCheck(kingPos))
+                checkFlag |= 256;
+        }
+
+        return (checkFlag == 511);
     }
 
     private boolean canMove(Position from, Position to) {
@@ -347,8 +428,21 @@ public class Game {
 
                 addPiece(newPiece);
 
-                isCheck(new Position(wKing.col, wKing.row));
-                isCheck(new Position(bKing.col, bKing.row));
+                if(isCheck(new Position(wKing.col, wKing.row)))
+                    Toast.makeText(context, "White king checked", Toast.LENGTH_SHORT).show();
+                if(isCheck(new Position(bKing.col, bKing.row)))
+                    Toast.makeText(context, "Black king checked", Toast.LENGTH_SHORT).show();
+
+                if(isCheckmate(new Position(wKing.col, wKing.row))) {
+                    Toast.makeText(context, "Checkmate! Black win.", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+                }
+
+                if(isCheckmate(new Position(bKing.col, bKing.row))) {
+                    Toast.makeText(context, "Checkmate! White win.", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+                }
+
                 flipTurn();
             }
         }
@@ -369,9 +463,30 @@ public class Game {
 
                 pieceBox.remove(movingPiece);
                 ChessPiece newPiece = new ChessPiece(movingPiece);
+
+                if(newPiece.pieceType == PieceType.KING && newPiece.player == Player.WHITE)
+                    wKing = newPiece;
+                else if(newPiece.pieceType == PieceType.KING && newPiece.player == Player.BLACK)
+                    bKing = newPiece;
+
                 newPiece.col = to.col;
                 newPiece.row = to.row;
                 addPiece(newPiece);
+
+                if(isCheck(new Position(wKing.col, wKing.row)))
+                    Toast.makeText(context, "White king checked", Toast.LENGTH_SHORT).show();
+                if(isCheck(new Position(bKing.col, bKing.row)))
+                    Toast.makeText(context, "Black king checked", Toast.LENGTH_SHORT).show();
+
+                if(isCheckmate(new Position(wKing.col, wKing.row))) {
+                    Toast.makeText(context, "Checkmate! Black win.", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+                }
+
+                if(isCheckmate(new Position(bKing.col, bKing.row))) {
+                    Toast.makeText(context, "Checkmate! White win.", Toast.LENGTH_SHORT).show();
+                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+                }
 
                 flipTurn();
             }
