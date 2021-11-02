@@ -164,7 +164,7 @@ public class ChessBoard extends View {
     }
 
     void drawPiece(Canvas canvas) {
-        for(byte row = 0; row < 8; ++ row) {
+        for(byte row = 0; row < 8; ++row) {
             for(byte col = 0; col < 8; ++col) {
                 if(chessInterface != null) {
                     ChessPiece piece = chessInterface.pieceAt(new Position(col, row));

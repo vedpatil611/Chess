@@ -264,74 +264,74 @@ public class Game {
         ChessPiece at = pieceAt(new Position(kingPos.col, kingPos.row + 1));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 2;
-        } else if(at != null) {
+        } else {
             kingPiece.row += 1;
-            if (isCheck(kingPos))
+            if (isCheck(new Position(kingPos.col, kingPos.row + 1)))
                 checkFlag |= 2;
         }
 
         at = pieceAt(new Position(kingPos.col, kingPos.row - 1));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 4;
-        } else if(at != null) {
+        } else {
             kingPiece.row -= 2;
-            if(isCheck(kingPos))
+            if(isCheck(new Position(kingPos.col, kingPos.row - 1)))
                 checkFlag |= 4;
         }
 
         at = pieceAt(new Position(kingPos.col + 1, kingPos.row));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 8;
-        } else if(at != null) {
+        } else {
             kingPiece.row += 1;
             kingPiece.col += 1;
-            if(isCheck(kingPos))
+            if(isCheck(new Position(kingPos.col + 1, kingPos.row)))
                 checkFlag |= 8;
         }
 
         at = pieceAt(new Position(kingPos.col - 1, kingPos.row));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 16;
-        } else if(at != null) {
+        } else {
             kingPiece.col -= 2;
-            if(isCheck(kingPos))
+            if(isCheck(new Position(kingPos.col - 1, kingPos.row)))
                 checkFlag |= 16;
         }
 
         at = pieceAt(new Position(kingPos.col + 1, kingPos.row + 1));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 32;
-        } else if(at != null) {
+        } else {
             kingPiece.col += 2;
             kingPiece.row += 1;
-            if(isCheck(kingPos))
+            if(isCheck(new Position(kingPos.col + 1, kingPos.row + 1)))
                 checkFlag |= 32;
         }
 
         at = pieceAt(new Position(kingPos.col + 1, kingPos.row - 1));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 64;
-        } else if(at != null) {
+        } else {
             kingPiece.row -= 2;
-            if(isCheck(kingPos))
+            if(isCheck(new Position(kingPos.col + 1, kingPos.row - 1)))
                 checkFlag |= 64;
         }
 
         at = pieceAt(new Position(kingPos.col - 1, kingPos.row - 1));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 128;
-        } else if(at != null) {
+        } else {
             kingPiece.col -= 2;
-            if(isCheck(kingPos))
+            if(isCheck(new Position(kingPos.col - 1, kingPos.row - 1)))
                 checkFlag |= 128;
         }
 
         at = pieceAt(new Position(kingPos.col - 1, kingPos.row + 1));
         if(at != null && at.player == kingPiece.player) {
             checkFlag |= 256;
-        } else if(at != null) {
+        } else {
             kingPiece.row += 2;
-            if(isCheck(kingPos))
+            if(isCheck(new Position(kingPos.col - 1, kingPos.row + 1)))
                 checkFlag |= 256;
         }
 
@@ -433,15 +433,15 @@ public class Game {
                 if(isCheck(new Position(bKing.col, bKing.row)))
                     Toast.makeText(context, "Black king checked", Toast.LENGTH_SHORT).show();
 
-                if(isCheckmate(new Position(wKing.col, wKing.row))) {
-                    Toast.makeText(context, "Checkmate! Black win.", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
-                }
-
-                if(isCheckmate(new Position(bKing.col, bKing.row))) {
-                    Toast.makeText(context, "Checkmate! White win.", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
-                }
+//                if(isCheckmate(new Position(wKing.col, wKing.row))) {
+//                    Toast.makeText(context, "Checkmate! Black win.", Toast.LENGTH_SHORT).show();
+//                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+//                }
+//
+//                if(isCheckmate(new Position(bKing.col, bKing.row))) {
+//                    Toast.makeText(context, "Checkmate! White win.", Toast.LENGTH_SHORT).show();
+//                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+//                }
 
                 flipTurn();
             }
@@ -478,15 +478,15 @@ public class Game {
                 if(isCheck(new Position(bKing.col, bKing.row)))
                     Toast.makeText(context, "Black king checked", Toast.LENGTH_SHORT).show();
 
-                if(isCheckmate(new Position(wKing.col, wKing.row))) {
-                    Toast.makeText(context, "Checkmate! Black win.", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
-                }
-
-                if(isCheckmate(new Position(bKing.col, bKing.row))) {
-                    Toast.makeText(context, "Checkmate! White win.", Toast.LENGTH_SHORT).show();
-                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
-                }
+//                if(isCheckmate(new Position(wKing.col, wKing.row))) {
+//                    Toast.makeText(context, "Checkmate! Black win.", Toast.LENGTH_SHORT).show();
+//                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+//                }
+//
+//                if(isCheckmate(new Position(bKing.col, bKing.row))) {
+//                    Toast.makeText(context, "Checkmate! White win.", Toast.LENGTH_SHORT).show();
+//                    new Handler().postDelayed(((ChessGame) context)::onBackPressed, 5000);
+//                }
 
                 flipTurn();
             }
