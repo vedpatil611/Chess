@@ -33,7 +33,7 @@ public class ChessGame extends Activity implements ChessInterface {
     Socket socket = null;
     boolean isEmulator = Build.FINGERPRINT.contains("generic");
 
-    Game game = new Game(Player.WHITE);
+    Game game/* = new Game(this, Player.WHITE)*/;
     ChessBoard board;
 
     Player playerColor;
@@ -53,7 +53,7 @@ public class ChessGame extends Activity implements ChessInterface {
         switch (intentPLayerValue) {
             case 1:
                 playerColor = Player.BLACK;
-                game = new Game(playerColor);
+                game = new Game(this, playerColor);
 
                 // start game server
                 Executors.newSingleThreadExecutor().execute((() -> {
@@ -80,7 +80,7 @@ public class ChessGame extends Activity implements ChessInterface {
             case 0:
                 playerColor = Player.WHITE;
                 socketHost = getIntent().getStringExtra("host");
-                game = new Game(playerColor);
+                game = new Game(this, playerColor);
 
                 // join game server
                 Executors.newSingleThreadExecutor().execute(() -> {

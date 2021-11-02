@@ -1,16 +1,23 @@
 package com.mad_project.chess;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.lang.Math;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Game {
-    private Set<ChessPiece> pieceBox = new HashSet<>();
+    private final Context context;
+    private final Set<ChessPiece> pieceBox = new HashSet<>();
     private Player playerTurn = Player.WHITE;
     private final Player playerColor;
+    private ChessPiece wKing;
+    private ChessPiece bKing;
 
-    public Game(Player playerColor) {
+    public Game(Context context, Player playerColor) {
+        this.context = context;
         this.playerColor = playerColor;
         reset();
     }
@@ -113,8 +120,67 @@ public class Game {
         return false;
     }
 
-    private boolean isCheck(Player playerColor) {
+    private boolean isHorizontalCheck(Position kingPos) {
+        ChessPiece kingPiece = pieceAt(kingPos);
+        for(int i = kingPos.col - 1; i >= 0; --i) {
+            ChessPiece at = pieceAt(new Position(i, kingPos.row));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.ROOK || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
+        for(int i = kingPos.col + 1; i < 8; ++i) {
+            ChessPiece at = pieceAt(new Position(i, kingPos.row));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.ROOK || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
+        return false;
+    }
 
+    private boolean isVerticalCheck(Position kingPos) {
+        ChessPiece kingPiece = pieceAt(kingPos);
+        for(int i = kingPos.row - 1; i >= 0; --i) {
+            ChessPiece at = pieceAt(new Position(kingPos.col, i));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.ROOK || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
+        for(int i = kingPos.row + 1; i < 8; ++i) {
+            ChessPiece at = pieceAt(new Position(kingPos.col, i));
+            if(at != null && at.player != kingPiece.player && (at.pieceType == PieceType.ROOK || at.pieceType == PieceType.QUEEN))
+                return true;
+            else if(at != null)
+                break;
+        }
+        return false;
+    }
+
+    private boolean isDiagonallyCheck(Position kingPos) {
+//        for(int i = 0; i < 8; ++i) {
+//            if(PieceType)
+//        }
+//        if (Math.abs(from.col - to.col) != Math.abs(from.row - to.row)) return false;
+//        int gap = Math.abs(from.col - to.col) - 1;
+//
+//        for (int i = 1; i <= gap; ++i) {
+//            int nextCol = (to.col > from.col) ? from.col + i : from.col - i;
+//            int nextRow = (to.row > from.row) ? from.row + i : from.row - i;
+//            if (pieceAt(new Position(nextCol, nextRow)) != null) {
+//                return false;
+//            }
+//        }
+        return false;
+    }
+
+    private boolean isCheck(Position kingPos) {
+        boolean isCheck = isHorizontalCheck(kingPos) || isVerticalCheck(kingPos);
+        if(isCheck) {
+            Toast.makeText(context, "King checked", Toast.LENGTH_SHORT).show();
+            return true;
+        }
         return false;
     }
 
@@ -167,8 +233,11 @@ public class Game {
 
         addPiece(new ChessPiece(3, 0, PieceType.QUEEN, Player.WHITE, R.drawable.w_queen));
         addPiece(new ChessPiece(3, 7, PieceType.QUEEN, Player.BLACK, R.drawable.b_queen));
-        addPiece(new ChessPiece(4, 0, PieceType.KING, Player.WHITE, R.drawable.w_king));
-        addPiece(new ChessPiece(4, 7, PieceType.KING, Player.BLACK, R.drawable.b_king));
+
+        wKing = new ChessPiece(4, 0, PieceType.KING, Player.WHITE, R.drawable.w_king);
+        bKing = new ChessPiece(4, 7, PieceType.KING, Player.BLACK, R.drawable.b_king);
+        addPiece(wKing);
+        addPiece(bKing);
     }
 
     public ChessPiece pieceAt(Position position) {
@@ -197,8 +266,16 @@ public class Game {
                 ChessPiece newPiece = new ChessPiece(movingPiece);
                 newPiece.col = to.col;
                 newPiece.row = to.row;
+
+                if(newPiece.pieceType == PieceType.KING && newPiece.player == Player.WHITE)
+                    wKing = newPiece;
+                else if(newPiece.pieceType == PieceType.KING && newPiece.player == Player.BLACK)
+                    bKing = newPiece;
+
                 addPiece(newPiece);
 
+                isCheck(new Position(wKing.col, wKing.row));
+                isCheck(new Position(bKing.col, bKing.row));
                 flipTurn();
             }
         }
